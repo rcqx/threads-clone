@@ -6,9 +6,12 @@ import { FiEdit } from "react-icons/fi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiUser } from "react-icons/bi";
 import { BsListNested } from "react-icons/bs";
+import { SignOutButton, useUser } from "@clerk/nextjs";
 import Styles from "./nav.tailwind";
 
 const Nav = () => {
+  const user = useUser();
+  const [showMenu, setShowMenu] = useState(false);
   const [selected, setSelected] = useState([1, 0, 0, 0, 0]);
 
   return (
@@ -55,10 +58,21 @@ const Nav = () => {
           <BiUser size={30} style={selected[4] ? { color: "white" } : {}} />
         </div>
       </div>
-      <BsListNested
-        size={30}
-        className="cursor-pointer text-[#4D4D4D] transition-colors duration-200 hover:text-white"
-      />
+      <div className="relative pr-3" onClick={() => setShowMenu(!showMenu)}>
+        <BsListNested
+          size={30}
+          className="cursor-pointer text-[#4D4D4D] transition-colors duration-200 hover:text-white"
+        />
+        {showMenu && (
+          <div className="absolute right-0 w-[174px] cursor-pointer rounded-2xl bg-[#181818] p-[1em]">
+            {user.isSignedIn && (
+              <SignOutButton>
+                <p className="text-[14px]">Log out</p>
+              </SignOutButton>
+            )}
+          </div>
+        )}
+      </div>
     </nav>
   );
 };
