@@ -13,7 +13,10 @@ const Nav = () => {
 
   return (
     <nav className="flex items-center justify-between">
-      <RiThreadsLine size={36} />
+      <RiThreadsLine
+        size={36}
+        className="ml-2 cursor-pointer transition-transform duration-200 hover:scale-110"
+      />
       <div className="flex">
         <div
           className={Styles.iconContainer}
@@ -52,7 +55,10 @@ const Nav = () => {
           <BiUser size={30} style={selected[4] ? { color: "white" } : {}} />
         </div>
       </div>
-      <BsListNested size={40} />
+      <BsListNested
+        size={30}
+        className="cursor-pointer text-[#4D4D4D] transition-colors duration-200 hover:text-white"
+      />
     </nav>
   );
 };
