@@ -25,14 +25,14 @@ const Nav = () => {
           className={Styles.iconContainer}
           onClick={() => setSelected([1, 0, 0, 0, 0])}
         >
-          <GoHomeFill size={30} style={selected[0] ? { color: "white" } : {}} />
+          <GoHomeFill size={28} style={selected[0] ? { color: "white" } : {}} />
         </div>
         <div
           className={Styles.iconContainer}
           onClick={() => setSelected([0, 1, 0, 0, 0])}
         >
           <PiMagnifyingGlassBold
-            size={30}
+            size={28}
             style={selected[1] ? { color: "white" } : {}}
           />
         </div>
@@ -40,14 +40,14 @@ const Nav = () => {
           className={Styles.iconContainer}
           onClick={() => setSelected([0, 0, 1, 0, 0])}
         >
-          <FiEdit size={30} style={selected[2] ? { color: "white" } : {}} />
+          <FiEdit size={27} style={selected[2] ? { color: "white" } : {}} />
         </div>
         <div
           className={Styles.iconContainer}
           onClick={() => setSelected([0, 0, 0, 1, 0])}
         >
           <AiOutlineHeart
-            size={30}
+            size={28}
             style={selected[3] ? { color: "white" } : {}}
           />
         </div>
@@ -55,12 +55,12 @@ const Nav = () => {
           className={Styles.iconContainer}
           onClick={() => setSelected([0, 0, 0, 0, 1])}
         >
-          <BiUser size={30} style={selected[4] ? { color: "white" } : {}} />
+          <BiUser size={28} style={selected[4] ? { color: "white" } : {}} />
         </div>
       </div>
       <div className="relative pr-3" onClick={() => setShowMenu(!showMenu)}>
         <BsListNested
-          size={30}
+          size={28}
           className="cursor-pointer text-[#4D4D4D] transition-colors duration-200 hover:text-white"
         />
         {showMenu && (
