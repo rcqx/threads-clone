@@ -12,6 +12,7 @@ import { FiLoader } from "react-icons/fi";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 dayjs.extend(relativeTime);
 
@@ -25,6 +26,15 @@ const CreatePost = () => {
     onSuccess: () => {
       setInput("");
       void ctx.posts.invalidate();
+    },
+
+    onError: (e) => {
+      const errorMessage = e?.data?.zodError?.fieldErrors?.content?.[0];
+      if (errorMessage) {
+        toast.error(errorMessage);
+      } else {
+        toast.error("Post is too long...");
+      }
     },
   });
 
@@ -41,12 +51,19 @@ const CreatePost = () => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         disabled={isPosting}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            mutate({ content: input });
+          }
+        }}
       />
       <button
         className="leading-2 h-[34px] rounded-lg border border-stone-700 px-[1em] font-medium text-stone-500"
         onClick={() => mutate({ content: input })}
+        disabled={!input.length}
       >
-        Post
+        {!isPosting ? "Post" : <FiLoader className="animate-spin" />}
       </button>
     </div>
   );
