@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { api } from "@/utils/api";
 import type { RouterOutputs } from "@/utils/api";
 import Nav from "@/components/nav/Nav";
@@ -13,6 +12,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import Image from "next/image";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
@@ -79,21 +79,27 @@ const PostView = (props: PostWithUser) => {
       className="mt-4 flex w-full items-start gap-4 border-b border-stone-800 pb-3 antialiased"
     >
       <div className="h-fit">
-        <div className="flex overflow-hidden rounded-full">
-          <Image
-            src={author.profilePicture}
-            width={40}
-            height={40}
-            alt="profile"
-          />
-        </div>
+        <Link href={`/@${author.username}`}>
+          <div className="flex overflow-hidden rounded-full">
+            <Image
+              src={author.profilePicture}
+              width={40}
+              height={40}
+              alt="profile"
+            />
+          </div>
+        </Link>
       </div>
       <div className="flex flex-1 flex-col gap-1">
         <div className="flex justify-between">
-          <h1 className="font-bold">{author.username}</h1>
-          <h1 className="text-[15px] text-[#777777]">
-            {dayjs(post.createdAt).fromNow()}
-          </h1>
+          <Link href={`/@${author.username}`}>
+            <h1 className="font-bold hover:underline">{author.username}</h1>
+          </Link>
+          <Link href={`/post/${post.id}`}>
+            <h1 className="text-[15px] text-[#777777]">
+              {dayjs(post.createdAt).fromNow()}
+            </h1>
+          </Link>
         </div>
 
         <p className="text-[15px]">{post.content}</p>
@@ -124,12 +130,6 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>Threads</title>
-        <meta name="description" content="Social App Demo" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main className="flex h-screen justify-center">
         <div className="flex w-full flex-col md:max-w-[76.875em]">
           <Nav />
