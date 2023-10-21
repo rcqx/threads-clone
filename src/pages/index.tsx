@@ -19,7 +19,14 @@ const CreatePost = () => {
   const [input, setInput] = useState("");
   const { user } = useUser();
 
-  const { mutate } = api.posts.create.useMutation();
+  const ctx = api.useContext();
+
+  const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
+    onSuccess: () => {
+      setInput("");
+      void ctx.posts.invalidate();
+    },
+  });
 
   if (!user) return null;
 
@@ -33,6 +40,7 @@ const CreatePost = () => {
         className="flex flex-1 items-center text-[14px] text-gray-500 dark:bg-[#101010]"
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        disabled={isPosting}
       />
       <button
         className="leading-2 h-[34px] rounded-lg border border-stone-700 px-[1em] font-medium text-stone-500"
