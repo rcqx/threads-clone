@@ -3,10 +3,12 @@ import { api } from "@/utils/api";
 import type { RouterOutputs } from "@/utils/api";
 import Nav from "@/components/nav/Nav";
 import { useUser } from "@clerk/nextjs";
+import { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsChat } from "react-icons/bs";
 import { PiPaperPlaneTiltBold } from "react-icons/pi";
 import { PiArrowsCounterClockwiseBold } from "react-icons/pi";
+import { FiLoader } from "react-icons/fi";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -14,7 +16,10 @@ import Image from "next/image";
 dayjs.extend(relativeTime);
 
 const CreatePost = () => {
+  const [input, setInput] = useState("");
   const { user } = useUser();
+
+  const { mutate } = api.posts.create.useMutation();
 
   if (!user) return null;
 
@@ -23,10 +28,16 @@ const CreatePost = () => {
       <div className="w-[40px] overflow-hidden rounded-full">
         <Image src={user.imageUrl} alt="Profile image" width={40} height={40} />
       </div>
-      <div className="flex flex-1 items-center text-[14px] text-gray-500 dark:bg-[#101010]">
-        Start a thread...
-      </div>
-      <button className="leading-2 h-[34px] rounded-lg border border-stone-700 px-[1em] font-medium text-stone-500">
+      <input
+        placeholder="Start a thread..."
+        className="flex flex-1 items-center text-[14px] text-gray-500 dark:bg-[#101010]"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+      <button
+        className="leading-2 h-[34px] rounded-lg border border-stone-700 px-[1em] font-medium text-stone-500"
+        onClick={() => mutate({ content: input })}
+      >
         Post
       </button>
     </div>
@@ -36,8 +47,6 @@ const CreatePost = () => {
 type PostWithUser = RouterOutputs["posts"]["getAll"][number];
 const PostView = (props: PostWithUser) => {
   const { post, author } = props;
-
-  console.log("POST", post);
 
   return (
     <div
@@ -79,7 +88,12 @@ export default function Home() {
   const user = useUser();
   const { data, isLoading } = api.posts.getAll.useQuery();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <FiLoader size={24} className="animate-spin" />
+      </div>
+    );
 
   if (!data) return <div>Something went wrong</div>;
 
