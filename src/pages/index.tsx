@@ -1,6 +1,5 @@
 import { api } from "@/utils/api";
 import type { RouterOutputs } from "@/utils/api";
-import Nav from "@/components/nav/Nav";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -8,6 +7,7 @@ import { BsChat } from "react-icons/bs";
 import { PiPaperPlaneTiltBold } from "react-icons/pi";
 import { PiArrowsCounterClockwiseBold } from "react-icons/pi";
 import { FiLoader } from "react-icons/fi";
+import Layout from "@/components/layout/Layout";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -129,21 +129,16 @@ export default function Home() {
   if (!data) return <div>Something went wrong</div>;
 
   return (
-    <>
-      <main className="flex h-screen justify-center">
-        <div className="flex w-full flex-col md:max-w-[76.875em]">
-          <Nav />
-          <div className="flex flex-col items-center">
-            <div className="flex w-[620px] flex-col items-center px-[24px]">
-              {user.isSignedIn && <CreatePost />}
+    <Layout>
+      <div className="flex flex-col items-center">
+        <div className="flex w-[620px] flex-col items-center px-[24px]">
+          {user.isSignedIn && <CreatePost />}
 
-              {data?.map((fullPost) => (
-                <PostView key={fullPost.post.id} {...fullPost} />
-              ))}
-            </div>
-          </div>
+          {data?.map((fullPost) => (
+            <PostView key={fullPost.post.id} {...fullPost} />
+          ))}
         </div>
-      </main>
-    </>
+      </div>
+    </Layout>
   );
 }

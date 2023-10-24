@@ -1,14 +1,12 @@
 import Head from "next/head";
+import Layout from "@/components/layout/Layout";
 import { api } from "@/utils/api";
-import Nav from "@/components/nav/Nav";
 import { FiLoader } from "react-icons/fi";
-// import { createProxySSGHelpers } from "@trpc/react-query/ssg";
-// import { appRouter } from "@/server/api/root";
-// import { db } from "../server/db";
-// import superjson from "superjson";
-// import type { GetStaticProps } from "next";
+import { useUser } from "@clerk/nextjs";
+import Image from "next/image";
 
 export default function ProfilePage() {
+  const { user } = useUser();
   const { data, isLoading } = api.profile.getUserByUsername.useQuery({
     username: "jr-cast",
   });
@@ -21,49 +19,51 @@ export default function ProfilePage() {
     );
 
   if (!data) return <div>Something went wrong</div>;
+  if (!user) return null;
+
+  console.log("USER", user);
 
   return (
     <>
       <Head>
         <title>{data.username}</title>
       </Head>
-
-      <main className="flex h-screen justify-center">
-        <div className="flex w-full flex-col md:max-w-[76.875em]">
-          <Nav />
-          <div className="flex flex-col items-center">
-            <div className="flex w-[620px] flex-col items-center px-[24px]">
-              {data.firstName + " " + data.lastName}
+      <Layout>
+        <div className="flex flex-col items-center">
+          <div className="flex w-[620px] flex-col items-center px-[24px]">
+            <div className="flex h-[9.875em] w-full items-center justify-between">
+              <div>
+                <h1 className="text-[24px] font-semibold antialiased">
+                  {data.firstName + " " + data.lastName}
+                </h1>
+                <h2 className="pb-5 text-sm">{data.username}</h2>
+                <span>0 followers</span>
+              </div>
+              <div className="overflow-hidden rounded-full">
+                <Image
+                  src={user.imageUrl}
+                  alt="Profile image"
+                  width={100}
+                  height={100}
+                />
+              </div>
+            </div>
+            <div className="w-full border-b border-[#3C4043]">
+              <ul className="flex">
+                <li className="w-full flex-1 border-b border-white p-3 text-center text-sm font-semibold antialiased">
+                  Threads
+                </li>
+                <li className="flex-1 p-3 text-center text-sm font-semibold text-[#777] antialiased">
+                  Replies
+                </li>
+                <li className="flex-1 p-3 text-center text-sm font-semibold text-[#777] antialiased">
+                  Reposts
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-      </main>
+      </Layout>
     </>
   );
 }
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const ssg = createProxySSGHelpers({
-//     router: appRouter,
-//     ctx: { db, userId: null },
-//     transformer: superjson,
-//   });
-
-//   const slug = context.params?.slug;
-//   const username = typeof slug === "string" ? slug.replace("@", "") : "";
-
-//   if (!username) throw new Error("No username");
-
-//   await ssg.profile.getUserByUsername.prefetch({ username });
-
-//   return {
-//     props: {
-//       trpcState: ssg.dehydrate(),
-//       username,
-//     },
-//   };
-// };
-
-// export const getStaticPaths = () => {
-//   return { path: [], fallback: "blocking" };
-// };
