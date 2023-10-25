@@ -1,15 +1,26 @@
 import Head from "next/head";
+import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { api } from "@/utils/api";
 import { FiLoader } from "react-icons/fi";
 import { useUser } from "@clerk/nextjs";
+import PostView from "@/components/postView/PostView";
 import Image from "next/image";
 
 export default function ProfilePage() {
   const { user } = useUser();
+  const [userPosts, setUserPosts] = useState([]);
   const { data, isLoading } = api.profile.getUserByUsername.useQuery({
     username: "jr-cast",
   });
+  const { data: posts, isLoading: loadingPost } = api.posts.getAll.useQuery();
+
+  useEffect(() => {
+    if (posts) {
+      const aux = posts.filter((item) => item.author.id === user?.id);
+      setUserPosts(aux);
+    }
+  }, [posts, user?.id]);
 
   if (isLoading)
     return (
@@ -19,9 +30,10 @@ export default function ProfilePage() {
     );
 
   if (!data) return <div>Something went wrong</div>;
+  if (!userPosts) return <div>No threads yet.</div>;
   if (!user) return null;
 
-  console.log("USER", user);
+  console.log(userPosts);
 
   return (
     <>
@@ -29,7 +41,7 @@ export default function ProfilePage() {
         <title>{data.username}</title>
       </Head>
       <Layout>
-        <div className="flex flex-col items-center">
+        <div className="flex h-full flex-col items-center">
           <div className="flex w-[620px] flex-col items-center px-[24px]">
             <div className="flex h-[9.875em] w-full items-center justify-between">
               <div>
@@ -60,6 +72,15 @@ export default function ProfilePage() {
                   Reposts
                 </li>
               </ul>
+            </div>
+            <div>
+              <div className="flex h-full flex-col items-center">
+                <div className="flex w-[620px] flex-col items-center px-[24px]">
+                  {userPosts?.map((item) => (
+                    <PostView key={item.post.id} {...item} />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

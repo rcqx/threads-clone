@@ -7,6 +7,9 @@ const Layout = (props: PropsWithChildren) => {
       <div className="flex w-full flex-col md:max-w-[76.875em]">
         <Nav />
         {props.children}
+        <span className="w-full pb-4 pt-2 text-center text-xs text-[#777] antialiased">
+          © 2023 Threads Terms Privacy Policy Cookies Policy
+        </span>
       </div>
     </main>
   );
