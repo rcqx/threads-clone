@@ -10,7 +10,7 @@ import { SignOutButton, useUser } from "@clerk/nextjs";
 import Styles from "./nav.tailwind";
 import Link from "next/link";
 
-const Nav = () => {
+const Nav = (props) => {
   const user = useUser();
   const [showMenu, setShowMenu] = useState(false);
   const [selected, setSelected] = useState([1, 0, 0, 0, 0]);
@@ -46,7 +46,10 @@ const Nav = () => {
         </div>
         <div
           className={Styles.iconContainer}
-          onClick={() => setSelected([0, 0, 1, 0, 0])}
+          onClick={() => {
+            setSelected([0, 0, 1, 0, 0]);
+            props.setPost(!props.post);
+          }}
         >
           <FiEdit size={27} style={selected[2] ? { color: "white" } : {}} />
         </div>

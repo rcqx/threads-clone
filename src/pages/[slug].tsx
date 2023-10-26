@@ -33,8 +33,6 @@ export default function ProfilePage() {
   if (!userPosts) return <div>No threads yet.</div>;
   if (!user) return null;
 
-  console.log(userPosts);
-
   return (
     <>
       <Head>
