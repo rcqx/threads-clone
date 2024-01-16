@@ -42,7 +42,7 @@ export default function ProfilePage() {
   return (
     <>
       <Head>
-        <title>{data.username}</title>
+        <title>Profile</title>
       </Head>
       <Layout2 post={post} setPost={setPost}>
         <div className="flex h-full flex-col items-center">
