@@ -10,7 +10,7 @@ import { SignOutButton, useUser } from "@clerk/nextjs";
 import Styles from "./nav.tailwind";
 import Link from "next/link";
 
-const Nav = (props) => {
+const Nav = (props: any) => {
   const user = useUser();
   const [showMenu, setShowMenu] = useState(false);
   const [selected, setSelected] = useState([1, 0, 0, 0, 0]);

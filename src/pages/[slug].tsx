@@ -9,7 +9,12 @@ import Image from "next/image";
 
 export default function ProfilePage() {
   const { user } = useUser();
-  const [userPosts, setUserPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState<
+    {
+      post: { id: number; createdAt: Date; content: string; authorId: string };
+      author: { id: string; username: string | null; profilePicture: string };
+    }[]
+  >([]);
   const { data, isLoading } = api.profile.getUserByUsername.useQuery({
     username: "jr-cast",
   });
@@ -38,7 +43,7 @@ export default function ProfilePage() {
       <Head>
         <title>{data.username}</title>
       </Head>
-      <Layout>
+      <Layout post={[]} setPost={[]}>
         <div className="flex h-full flex-col items-center">
           <div className="flex w-[620px] flex-col items-center px-[24px]">
             <div className="flex h-[9.875em] w-full items-center justify-between">

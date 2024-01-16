@@ -7,7 +7,17 @@ import Layout from "@/components/layout/Layout";
 import Image from "next/image";
 import toast from "react-hot-toast";
 
-const CreatePost = ({ post, setPost, input, setInput }) => {
+const CreatePost = ({
+  post,
+  setPost,
+  input,
+  setInput,
+}: {
+  post: any;
+  setPost: any;
+  input: any;
+  setInput: any;
+}) => {
   const { user } = useUser();
   const ctx = api.useContext();
   const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
@@ -130,7 +140,6 @@ export default function Home() {
               setInput={setInput}
             />
           )}
-
           {data?.map((fullPost) => (
             <PostView key={fullPost.post.id} {...fullPost} />
           ))}
