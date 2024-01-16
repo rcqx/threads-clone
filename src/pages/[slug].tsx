@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import Layout from "@/components/layout/Layout";
+import Layout2 from "@/components/layout/Layout2";
 import { api } from "@/utils/api";
 import { FiLoader } from "react-icons/fi";
 import { useUser } from "@clerk/nextjs";
@@ -9,6 +9,7 @@ import Image from "next/image";
 
 export default function ProfilePage() {
   const { user } = useUser();
+  const [post, setPost] = useState(false);
   const [userPosts, setUserPosts] = useState<
     {
       post: { id: number; createdAt: Date; content: string; authorId: string };
@@ -43,7 +44,7 @@ export default function ProfilePage() {
       <Head>
         <title>{data.username}</title>
       </Head>
-      <Layout post={[]} setPost={[]}>
+      <Layout2 post={post} setPost={setPost}>
         <div className="flex h-full flex-col items-center">
           <div className="flex w-[620px] flex-col items-center px-[24px]">
             <div className="flex h-[9.875em] w-full items-center justify-between">
@@ -87,7 +88,7 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-      </Layout>
+      </Layout2>
     </>
   );
 }
