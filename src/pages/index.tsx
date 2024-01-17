@@ -61,7 +61,7 @@ const CreatePost = ({
       >
         <span className="mb-6 font-bold">New thread</span>
         <div
-          className={`flex w-[38%] flex-col rounded-[1.15em] bg-[#181818] px-6 py-6 `}
+          className={`flex w-5/6 flex-col rounded-[1.15em] bg-[#181818] px-6 py-6 md:w-4/6 lg:w-[38%] `}
           onClick={(e) => e.stopPropagation()}
           style={{ border: "0.5px solid gray" }}
         >
@@ -131,7 +131,7 @@ export default function Home() {
   return (
     <Layout post={post} setPost={setPost}>
       <div className="flex h-full flex-col items-center">
-        <div className="flex w-[620px] flex-col items-center px-[24px]">
+        <div className="flex w-full flex-col items-center px-[24px] md:w-1/2">
           {user.isSignedIn && (
             <CreatePost
               post={post}

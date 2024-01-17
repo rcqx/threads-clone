@@ -36,7 +36,7 @@ const Nav = (props: any) => {
           </div>
         </Link>
         <div
-          className={Styles.iconContainer}
+          className={`${Styles.iconContainer} hidden md:flex`}
           onClick={() => setSelected([0, 1, 0, 0, 0])}
         >
           <PiMagnifyingGlassBold
@@ -45,7 +45,7 @@ const Nav = (props: any) => {
           />
         </div>
         <div
-          className={Styles.iconContainer}
+          className={`${Styles.iconContainer} hidden md:flex`}
           onClick={() => {
             setSelected([0, 0, 1, 0, 0]);
             props.setPost(!props.post);
@@ -54,7 +54,7 @@ const Nav = (props: any) => {
           <FiEdit size={27} style={selected[2] ? { color: "white" } : {}} />
         </div>
         <div
-          className={Styles.iconContainer}
+          className={`${Styles.iconContainer} hidden md:flex`}
           onClick={() => setSelected([0, 0, 0, 1, 0])}
         >
           <AiOutlineHeart
