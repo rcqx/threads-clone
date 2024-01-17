@@ -17,7 +17,7 @@ const PostView = (props: PostWithUser) => {
   return (
     <div
       key={post.id}
-      className="mt-4 flex w-full items-start gap-4 border-b border-stone-800 pb-3 antialiased"
+      className="mt-4 flex w-full items-start gap-4 border-b  border-stone-800 pb-3 antialiased"
     >
       <div className="h-fit">
         <Link href={`/@${author.username}`}>

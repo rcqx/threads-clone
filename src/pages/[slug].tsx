@@ -46,7 +46,7 @@ export default function ProfilePage() {
       </Head>
       <Layout2 post={post} setPost={setPost}>
         <div className="flex h-full flex-col items-center">
-          <div className="flex w-[620px] flex-col items-center px-[24px]">
+          <div className="flex w-full flex-col items-center px-[24px] lg:w-1/2">
             <div className="flex h-[9.875em] w-full items-center justify-between">
               <div>
                 <h1 className="text-[24px] font-semibold antialiased">
@@ -77,13 +77,12 @@ export default function ProfilePage() {
                 </li>
               </ul>
             </div>
-            <div>
-              <div className="flex h-full flex-col items-center">
-                <div className="flex w-[620px] flex-col items-center px-[24px]">
-                  {userPosts?.map((item) => (
-                    <PostView key={item.post.id} {...item} />
-                  ))}
-                </div>
+
+            <div className="flex h-full w-full flex-col items-center">
+              <div className="flex w-full flex-col items-center px-[24px]">
+                {userPosts?.map((item) => (
+                  <PostView key={item.post.id} {...item} />
+                ))}
               </div>
             </div>
           </div>
